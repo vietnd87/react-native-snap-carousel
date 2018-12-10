@@ -58,6 +58,7 @@ export default class Carousel extends Component {
         lockScrollWhileSnapping: PropTypes.bool,
         loop: PropTypes.bool,
         loopClonesPerSide: PropTypes.number,
+        customLength: PropTypes.number,
         scrollEnabled: PropTypes.bool,
         scrollInterpolator: PropTypes.func,
         slideInterpolatedStyle: PropTypes.func,
@@ -383,13 +384,13 @@ export default class Carousel extends Component {
     }
 
     _getCustomDataLength (props = this.props) {
-        const { data, loopClonesPerSide } = props;
+        const { data, loopClonesPerSide, customLength } = props;
         const dataLength = data && data.length;
 
         if (!dataLength) {
             return 0;
         }
-
+        if (!this._enableLoop() && customLength) return customLength;
         return this._enableLoop() ? dataLength + (2 * loopClonesPerSide) : dataLength;
     }
 
